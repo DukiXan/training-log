@@ -15,7 +15,7 @@ use App\Exercise;
 use Illuminate\Http\Request;
 
 Route::get('/', function () {
-	$exercises = Exercise::orderBy('created_at', 'asc')->get();
+	$exercises = Exercise::orderBy('created_at', 'desc')->get();
     return view('exercises', [
     	'exercises' => $exercises,
     ]);
