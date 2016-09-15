@@ -15,9 +15,21 @@ use App\Exercise;
 use Illuminate\Http\Request;
 
 Route::get('/', function () {
-	$exercises = Exercise::orderBy('created_at', 'desc')->get();
+	$exercises = Exercise::orderBy('created_at', 'asc')->get();
+
+	$result = array();
+	foreach ($exercises as $exercise) {
+		if (empty($result[$exercise['date']])) {
+			$result[$exercise['date']] = array();
+		}
+
+		array_push($result[$exercise['date']], $exercise);
+	}
+
+	$result = array_reverse($result);
+
     return view('exercises', [
-    	'exercises' => $exercises,
+    	'result' => $result,
     ]);
 });
 
@@ -35,7 +47,7 @@ Route::post('/exercise', function(Request $request) {
 	$exercise = new Exercise();
 	$exercise->name = $request->name;
 	$exercise->notes = $request->notes;
-	var_dump($exercise);
+	$exercise->date = date("Y-m-d");
 	$exercise->save();
 
 	return redirect('/');

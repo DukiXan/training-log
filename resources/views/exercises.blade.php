@@ -42,7 +42,7 @@
     </div>
 
     <!-- Current Exercises -->
-    @if (count($exercises) > 0)
+    @if (count($result) > 0)
         <div class="panel panel-default">
             <div class="panel-heading">
                 Current exercises
@@ -50,37 +50,34 @@
 
             <div class="panel-body">
                 <table class="table table-striped exercise-table">
-
-                    <!-- Table Headings -->
-                    <thead>
-                        <th>exercise</th>
-                        <th>&nbsp;</th>
-                    </thead>
-
                     <!-- Table Body -->
                     <tbody>
-                        @foreach ($exercises as $exercise)
+                        @foreach ($result as $date => $exercises)
                             <tr>
-                                <!-- Exercise Name -->
-                                <td class="table-text">
-                                    <div>{{ $exercise->name }}</div>
+                                <td style="background: gray" class="table-text">
+                                    <b>{{ $date }}</b>
                                 </td>
-                                <td class="table-text">
-                                    <div>{{ $exercise->notes }}</div>
-                                </td>
-                                <td class="table-text">
-                                    <div>{{ $exercise->date }}</div>
-                                </td>
+                                @foreach ($exercises as $exercise)
+                                <tr>
+                                    <!-- Exercise Name -->
+                                    <td class="table-text">
+                                        <div>{{ $exercise->name }}</div>
+                                    </td>
+                                    <td class="table-text">
+                                        <div>{{ $exercise->notes }}</div>
+                                    </td>
 
-                                <!-- Delete Button -->
-                                <td>
-                                    <form action="exercise/{{ $exercise->id }}" method="POST">
-                                        {{ csrf_field() }}
-                                        {{ method_field('DELETE') }}
+                                    <!-- Delete Button -->
+                                    <td>
+                                        <form action="exercise/{{ $exercise->id }}" method="POST">
+                                            {{ csrf_field() }}
+                                            {{ method_field('DELETE') }}
 
-                                        <button>Delete Exercise</button>
-                                    </form>
-                                </td>
+                                            <button>Delete Exercise</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                @endforeach
                             </tr>
                         @endforeach
                     </tbody>

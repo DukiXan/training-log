@@ -17,7 +17,7 @@ class CreateExercisesTable extends Migration
             $table->timestamps();
             $table->string('name');
             $table->string('notes');
-            $table->date('date')->default(date("Y-m-d"));
+            $table->date('date');
         });
     }
 
