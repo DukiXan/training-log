@@ -28,7 +28,7 @@ Route::get('/', function () {
 
 	$result = array_reverse($result);
 
-    return view('exercises', [
+    return view('home', [
     	'result' => $result,
     ]);
 });
@@ -57,4 +57,48 @@ Route::delete('/exercise/{id}', function($id) {
 	Exercise::findOrFail($id)->delete();
 
     return redirect('/');
+});
+
+
+
+Route::get('/dateFilter', function() {
+	$datesRaw = DB::table('exercises')
+					->groupBy('date')
+					->get();
+
+	$dates = array();
+	foreach ($datesRaw as $date) {
+		array_push($dates, $date->date);
+	}
+
+	return view('dateFilter', [
+		'dates' => $dates,
+	]);
+});
+
+Route::get('/dateFilter/{date}', function($date) {
+	$exercises = Exercise::orderBy('created_at')
+								->where('date', '=', $date)
+								->get();
+
+	return view('exercisesByDate', [
+		'exercises' => $exercises,
+	]);
+});
+
+
+Route::get('/exercises', function() {
+	$exercises = Exercise::groupby('name')->get();
+
+	return view('exercises', [
+		'exercises' => $exercises,
+	]);
+});
+
+Route::get('/exercises/{name}', function($name) {
+	$exercises = Exercise::where('name', '=', $name)->get();
+	
+	return view('exercisePreview', [
+		'exercises' => $exercises,
+	]);
 });

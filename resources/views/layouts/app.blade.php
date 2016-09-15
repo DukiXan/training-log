@@ -7,6 +7,15 @@
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     </head>
     <body>
+        <div class="container">
+            <nav class="navbar navbar-default">
+                <ul class="nav navbar-nav">
+			        <li class="active"><a href="{{ URL::to('/') }}">Home</a></li>
+			        <li><a href="{{ URL::to('/dateFilter') }}">Date</a></li>
+			        <li><a href="{{ URL::to('/exercises') }}">Exercises</a></li>
+			    </ul>
+            </nav>
+        </div>
         @yield('content')
     </body>
 </html>

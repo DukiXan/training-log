@@ -4,17 +4,17 @@
 <div class="panel-body">
 	<div class="panel panel-default">
         <div class="panel-heading">
-            Select an exercise
+            Select a date
         </div>
 
         <div class="panel-body">
             <table class="table table-striped exercise-table">
                 <!-- Table Body -->
                 <tbody>
-				    @foreach ($exercises as $exercise)
+				    @foreach ($dates as $date)
                 	<tr>
                 		<td>
-				    		<a href="exercises/{{ $exercise->name }}">{{ $exercise->name }} </a>
+				    		<a href="dateFilter/{{ $date }}">{{ $date }} </a>
 				    	</td>
 					</tr>
 				    @endforeach

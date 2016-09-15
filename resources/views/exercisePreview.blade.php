@@ -4,7 +4,7 @@
 <div class="panel-body">
 	<div class="panel panel-default">
         <div class="panel-heading">
-            Select an exercise
+            Exercise name
         </div>
 
         <div class="panel-body">
@@ -14,7 +14,7 @@
 				    @foreach ($exercises as $exercise)
                 	<tr>
                 		<td>
-				    		<a href="exercises/{{ $exercise->name }}">{{ $exercise->name }} </a>
+				    		{{ $exercise->date }}, {{ $exercise->notes }}
 				    	</td>
 					</tr>
 				    @endforeach
