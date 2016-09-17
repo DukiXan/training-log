@@ -83,6 +83,7 @@ Route::get('/dateFilter/{date}', function($date) {
 
 	return view('exercisesByDate', [
 		'exercises' => $exercises,
+		'date' => $date
 	]);
 });
 
@@ -100,6 +101,7 @@ Route::get('/exercises/{name}', function($name) {
 	
 	return view('exercisePreview', [
 		'exercises' => $exercises,
+		'name' => $name
 	]);
 });
 

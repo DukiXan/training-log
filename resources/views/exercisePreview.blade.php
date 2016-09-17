@@ -4,7 +4,7 @@
 <div class="panel-body">
 	<div class="panel panel-default">
         <div class="panel-heading">
-            Exercise name
+            <b>{{ $name }}</b>
         </div>
 
         <div class="panel-body">

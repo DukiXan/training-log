@@ -9,7 +9,7 @@
     @if (count($exercises) > 0)
         <div class="panel panel-default">
             <div class="panel-heading">
-                Exercises
+                <b>{{ $date }}</b>
             </div>
 
             <div class="panel-body">
