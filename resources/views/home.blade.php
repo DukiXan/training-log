@@ -67,6 +67,12 @@
                                         <div>{{ $exercise->notes }}</div>
                                     </td>
 
+                                    <td>
+                                        <form action="editExercise/{{ $exercise->id }}" method="GET">
+                                            <button>Edit</button>
+                                        </form>
+                                    </td>
+
                                     <!-- Delete Button -->
                                     <td>
                                         <form action="exercise/{{ $exercise->id }}" method="POST">

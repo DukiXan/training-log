@@ -88,7 +88,7 @@ Route::get('/dateFilter/{date}', function($date) {
 
 
 Route::get('/exercises', function() {
-	$exercises = Exercise::groupby('name')->get();
+	$exercises = Exercise::groupBy('name')->get();
 
 	return view('exercises', [
 		'exercises' => $exercises,
@@ -101,4 +101,38 @@ Route::get('/exercises/{name}', function($name) {
 	return view('exercisePreview', [
 		'exercises' => $exercises,
 	]);
+});
+
+//TODO ROUTE GROUP for editExercise
+
+Route::get('/editExercise', function() {
+	return redirect('/');
+});
+
+Route::get('/editExercise/{id}', function($id) {
+	$exercise = Exercise::where('id', '=', $id)->get();
+
+	return view('editExercise', [
+		'exercise' => $exercise,
+	]);
+});
+
+Route::put('/editExercise/', function(Request $request) {
+	$validator = Validator::make($request->all(), [
+		'name' => 'required|max:255',
+	]);
+
+	if ($validator->fails()) {
+		return redirect('/editExercise/' . $request->id)
+			->withInput()
+			->withErrors($validator);
+	}
+
+	$exercise = Exercise::find($request->id);
+	$exercise->name = $request->name;
+	$exercise->notes = $request->notes;
+	$exercise->date = $request->date;
+	$exercise->save();
+
+	return redirect('/');
 });

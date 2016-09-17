@@ -14,7 +14,10 @@
 				    @foreach ($exercises as $exercise)
                 	<tr>
                 		<td>
-				    		{{ $exercise->date }}, {{ $exercise->notes }}
+				    		<a href="{{ URL::to('/dateFilter') }}/{{ $exercise->date }}">{{ $exercise->date }}</a>
+				    	</td>
+				    	<td>
+				    		{{ $exercise->notes }}
 				    	</td>
 					</tr>
 				    @endforeach

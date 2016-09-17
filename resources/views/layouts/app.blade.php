@@ -10,9 +10,15 @@
         <div class="container">
             <nav class="navbar navbar-default">
                 <ul class="nav navbar-nav">
-			        <li class="active"><a href="{{ URL::to('/') }}">Home</a></li>
-			        <li><a href="{{ URL::to('/dateFilter') }}">Date</a></li>
-			        <li><a href="{{ URL::to('/exercises') }}">Exercises</a></li>
+			        <li class="{{ Request::is('/') ? 'active' : '' }}">
+                        <a href="{{ URL::to('/') }}">Home</a>
+                    </li>
+			        <li class="{{ Request::is('dateFilter*') ? 'active' : '' }}">
+                        <a href="{{ URL::to('/dateFilter') }}">Date</a>
+                    </li>
+			        <li class="{{ Request::is('exercises*') ? 'active' : '' }}">
+                        <a href="{{ URL::to('/exercises') }}">Exercises</a>
+                    </li>
 			    </ul>
             </nav>
         </div>

@@ -20,12 +20,19 @@
                             <tr>
                                 <!-- Exercise Name -->
                                 <td class="table-text">
-                                    <div>{{ $exercise->name }}</div>
+                                    <div>
+                                        <a href="{{ URL::to('/exercises') }}/{{ $exercise->name }}">{{ $exercise->name }}</a>
+                                    </div>
                                 </td>
                                 <td class="table-text">
                                     <div>{{ $exercise->notes }}</div>
                                 </td>
 
+                                <td>
+                                    <form action="{{ URL::to('/editExercise') }}/{{ $exercise->id }}" method="GET">
+                                        <button>Edit</button>
+                                    </form>
+                                </td>
                                 <!-- Delete Button -->
                                 <td>
                                     <form action="{{ URL::to('/exercise') }}/{{ $exercise->id }}" method="POST">
