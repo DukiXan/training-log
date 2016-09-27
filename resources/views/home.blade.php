@@ -55,13 +55,19 @@
                         @foreach ($result as $date => $exercises)
                             <tr>
                                 <td style="background: gray" class="table-text">
-                                    <b>{{ $date }}</b>
+                                    <a href="{{ URL::to('/dateFilter') }}/{{ $date }}">
+                                        <b>{{ $date }}</b>
+                                    </a>
                                 </td>
                                 @foreach ($exercises as $exercise)
                                 <tr>
                                     <!-- Exercise Name -->
                                     <td class="table-text">
-                                        <div>{{ $exercise->name }}</div>
+                                        <div>
+                                            <a href="{{ URL::to('/exercises') }}/{{ $exercise->name }}">
+                                                {{ $exercise->name }}
+                                            </a>
+                                        </div>
                                     </td>
                                     <td class="table-text">
                                         <div>{{ $exercise->notes }}</div>
