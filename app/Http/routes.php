@@ -14,127 +14,15 @@
 use App\Exercise;
 use Illuminate\Http\Request;
 
-Route::get('/', function () {
-	$exercises = Exercise::orderBy('created_at', 'asc')->get();
+Route::get('/', 'ExerciseController@getTrainingLog');
+Route::post('/exercise', 'ExerciseController@postExercise');
+Route::delete('/exercise/{id}', 'ExerciseController@deleteExercise');
 
-	$result = array();
-	foreach ($exercises as $exercise) {
-		if (empty($result[$exercise['date']])) {
-			$result[$exercise['date']] = array();
-		}
+Route::get('/dateFilter', 'ExerciseController@getDates');
+Route::get('/dateFilter/{date}', 'ExerciseController@getDate');
 
-		array_push($result[$exercise['date']], $exercise);
-	}
+Route::get('/exercises', 'ExerciseController@getExercises');
+Route::get('/exercises/{name}', 'ExerciseController@getExerciseByName');
 
-	$result = array_reverse($result);
-
-    return view('home', [
-    	'result' => $result,
-    ]);
-});
-
-Route::post('/exercise', function(Request $request) {
-	$validator = Validator::make($request->all(), [
-		'name' => 'required|max:255',
-	]);
-
-	if ($validator->fails()) {
-		return redirect('/')
-			->withInput()
-			->withErrors($validator);
-	}
-
-	$exercise = new Exercise();
-	$exercise->name = $request->name;
-	$exercise->notes = $request->notes;
-	$exercise->date = date("Y-m-d");
-	$exercise->save();
-
-	return redirect('/');
-});
-
-Route::delete('/exercise/{id}', function($id) {
-	Exercise::findOrFail($id)->delete();
-
-    return redirect('/');
-});
-
-
-
-Route::get('/dateFilter', function() {
-	$datesRaw = DB::table('exercises')
-					->groupBy('date')
-					->get();
-
-	$dates = array();
-	foreach ($datesRaw as $date) {
-		array_push($dates, $date->date);
-	}
-
-	return view('dateFilter', [
-		'dates' => $dates,
-	]);
-});
-
-Route::get('/dateFilter/{date}', function($date) {
-	$exercises = Exercise::orderBy('created_at')
-								->where('date', '=', $date)
-								->get();
-
-	return view('exercisesByDate', [
-		'exercises' => $exercises,
-		'date' => $date
-	]);
-});
-
-
-Route::get('/exercises', function() {
-	$exercises = Exercise::groupBy('name')->get();
-
-	return view('exercises', [
-		'exercises' => $exercises,
-	]);
-});
-
-Route::get('/exercises/{name}', function($name) {
-	$exercises = Exercise::where('name', '=', $name)->get();
-	
-	return view('exercisePreview', [
-		'exercises' => $exercises,
-		'name' => $name
-	]);
-});
-
-//TODO ROUTE GROUP for editExercise
-
-Route::get('/editExercise', function() {
-	return redirect('/');
-});
-
-Route::get('/editExercise/{id}', function($id) {
-	$exercise = Exercise::where('id', '=', $id)->get();
-
-	return view('editExercise', [
-		'exercise' => $exercise,
-	]);
-});
-
-Route::put('/editExercise/', function(Request $request) {
-	$validator = Validator::make($request->all(), [
-		'name' => 'required|max:255',
-	]);
-
-	if ($validator->fails()) {
-		return redirect('/editExercise/' . $request->id)
-			->withInput()
-			->withErrors($validator);
-	}
-
-	$exercise = Exercise::find($request->id);
-	$exercise->name = $request->name;
-	$exercise->notes = $request->notes;
-	$exercise->date = $request->date;
-	$exercise->save();
-
-	return redirect('/');
-});
+Route::get('editExercise/{id}', 'ExerciseController@getExerciseById');
+Route::put('editExercise', 'ExerciseController@putExercise');
