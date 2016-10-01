@@ -7,7 +7,7 @@ class CreateExercisesTable extends Migration
 {
     /**
      * Run the migrations.
-     *0
+     *
      * @return void
      */
     public function up()

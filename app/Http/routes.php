@@ -29,4 +29,3 @@ Route::put('editExercise', 'ExerciseController@putExercise');
 
 Route::auth();
 
-Route::get('/home', 'HomeController@index');
