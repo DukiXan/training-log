@@ -19,10 +19,14 @@ Route::post('/exercise', 'ExerciseController@postExercise');
 Route::delete('/exercise/{id}', 'ExerciseController@deleteExercise');
 
 Route::get('/dateFilter', 'ExerciseController@getDates');
-Route::get('/dateFilter/{date}', 'ExerciseController@getDate');
+Route::get('/dateFilter/{date}', 'ExerciseController@getExercisesByDate');
 
 Route::get('/exercises', 'ExerciseController@getExercises');
 Route::get('/exercises/{name}', 'ExerciseController@getExerciseByName');
 
 Route::get('editExercise/{id}', 'ExerciseController@getExerciseById');
 Route::put('editExercise', 'ExerciseController@putExercise');
+
+Route::auth();
+
+Route::get('/home', 'HomeController@index');

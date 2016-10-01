@@ -3,22 +3,22 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateExercisesTable extends Migration
+class CreateUsersTable extends Migration
 {
     /**
      * Run the migrations.
-     *0
+     *
      * @return void
      */
     public function up()
     {
-        Schema::create('exercises', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
             $table->string('name');
-            $table->string('notes');
-            $table->date('date');
-            $table->integer('user_id')->unsigned()->index();
+            $table->string('email')->unique();
+            $table->string('password');
+            $table->rememberToken();
+            $table->timestamps();
         });
     }
 
@@ -29,6 +29,6 @@ class CreateExercisesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('exercises');
+        Schema::drop('users');
     }
 }
