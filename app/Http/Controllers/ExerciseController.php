@@ -8,6 +8,10 @@ use App\Http\Requests;
 
 class ExerciseController extends Controller
 {
+	public function __construct() {
+		$this->middleware('auth');
+	}
+
 	/**
 	* desc: Gets exercises grouped by date in ASC order
 	*/
@@ -34,11 +38,16 @@ class ExerciseController extends Controller
 	* desc: Adds an exercise for today's date
 	*/
     public function postExercise(Request $request) {
+
+
 		$this->validate($request, [
 	    	'name' => 'required|max:255',
 	    ]);
 
 		$exercise = new Exercise();
+
+		$this->authorize('canPerformAction', $exercise);
+
 		$exercise->name = $request->name;
 		$exercise->notes = $request->notes;
 		$exercise->date = date("Y-m-d");
@@ -51,7 +60,12 @@ class ExerciseController extends Controller
 	* desc: Deletes an exercise by id
 	*/
     public function deleteExercise($id) {
-		Exercise::findOrFail($id)->delete();
+		$exercise = Exercise::findOrFail($id);
+
+		$this->authorize('canPerformAction', $exercise);
+
+		$exercise->delete();
+
 		return redirect('/');
     }
 
@@ -128,6 +142,9 @@ class ExerciseController extends Controller
 	    ]);
 
 		$exercise = Exercise::find($request->id);
+
+		$this->authorize('canPerformAction', $exercise);
+
 		$exercise->name = $request->name;
 		$exercise->notes = $request->notes;
 		$exercise->date = $request->date;
