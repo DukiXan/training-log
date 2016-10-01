@@ -56,6 +56,15 @@
                             </div>
                         </div>
                     </form>
+
+                    <div style="text-align: center;">
+                        <a href="{{ url('/register') }}">
+                            <button class="btn">
+                                Don't have an account?
+                            </button> 
+                        </a>
+                    </div>
+
                 </div>
             </div>
         </div>
