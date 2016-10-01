@@ -42,16 +42,11 @@ class ExerciseController extends Controller
 	* desc: Adds an exercise for today's date
 	*/
     public function postExercise(Request $request) {
-
-
 		$this->validate($request, [
 	    	'name' => 'required|max:255',
 	    ]);
 
 		$exercise = new Exercise();
-
-		$this->authorize('canPerformAction', $exercise);
-
 		$exercise->name = $request->name;
 		$exercise->notes = $request->notes;
 		$exercise->user_id = Auth::id();
