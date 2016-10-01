@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Exercise;
 use App\Http\Requests;
+use Illuminate\Support\Facades\Auth;
 
 class ExerciseController extends Controller
 {
@@ -16,7 +17,10 @@ class ExerciseController extends Controller
 	* desc: Gets exercises grouped by date in ASC order
 	*/
     public function getTrainingLog() {
-    	$exercises = Exercise::orderBy('created_at', 'asc')->get();
+    	$userId = Auth::id();
+    	$exercises = Exercise::orderBy('created_at', 'asc')
+    							->where('user_id', '=', $userId)
+    							->get();
 
 		$result = array();
 		foreach ($exercises as $exercise) {
@@ -50,6 +54,7 @@ class ExerciseController extends Controller
 
 		$exercise->name = $request->name;
 		$exercise->notes = $request->notes;
+		$exercise->user_id = Auth::id();
 		$exercise->date = date("Y-m-d");
 		$exercise->save();
 
@@ -73,7 +78,10 @@ class ExerciseController extends Controller
 	* desc: Gets all used dates
 	*/
     public function getDates() {
-		$datesRaw = Exercise::groupBy('date')->get();
+    	$userId = Auth::id();
+		$datesRaw = Exercise::groupBy('date')
+    							->where('user_id', '=', $userId)
+    							->get();
 
 		$dates = array();
 		foreach ($datesRaw as $date) {
@@ -89,8 +97,10 @@ class ExerciseController extends Controller
 	* desc: Gets exercises by date
 	*/
     public function getExercisesByDate($date) {
+    	$userId = Auth::id();
     	$exercises = Exercise::orderBy('created_at')
 								->where('date', '=', $date)
+								->where('user_id', '=', $userId)
 								->get();
 
 		return view('exercisesByDate', [
@@ -103,7 +113,10 @@ class ExerciseController extends Controller
 	* desc: Gets all exercises
 	*/
     public function getExercises() {
-    	$exercises = Exercise::groupBy('name')->get();
+    	$userId = Auth::id();
+    	$exercises = Exercise::groupBy('name')
+								->where('user_id', '=', $userId)
+								->get();
 
 		return view('exercises', [
 			'exercises' => $exercises,
@@ -114,7 +127,10 @@ class ExerciseController extends Controller
 	* desc: Gets exercise by name
 	*/
     public function getExerciseByName($name) {
-    	$exercises = Exercise::where('name', '=', $name)->get();
+    	$userId = Auth::id();
+    	$exercises = Exercise::where('name', '=', $name)
+								->where('user_id', '=', $userId)
+								->get();
 		
 		return view('exercisePreview', [
 			'exercises' => $exercises,
@@ -126,7 +142,10 @@ class ExerciseController extends Controller
 	* desc: Gets exercises by id
 	*/
     public function getExerciseById($id) {
-    	$exercise = Exercise::where('id', '=', $id)->get();
+    	$userId = Auth::id();
+    	$exercise = Exercise::where('id', '=', $id)
+								->where('user_id', '=', $userId)
+								->get();
 
 		return view('editExercise', [
 			'exercise' => $exercise,
