@@ -18,7 +18,7 @@ Route::get('/', 'ExerciseController@getTrainingLog');
 Route::post('/exercise', 'ExerciseController@postExercise');
 Route::delete('/exercise/{id}', 'ExerciseController@deleteExercise');
 
-Route::get('/dateFilter', 'ExerciseController@getDates');
+Route::get('/dateFilter', 'ExerciseController@getExercisesByDate');
 Route::get('/dateFilter/{date}', 'ExerciseController@getDate');
 
 Route::get('/exercises', 'ExerciseController@getExercises');

@@ -8,6 +8,9 @@ use App\Http\Requests;
 
 class ExerciseController extends Controller
 {
+	/**
+	* desc: Gets exercises grouped by date in ASC order
+	*/
     public function getTrainingLog() {
     	$exercises = Exercise::orderBy('created_at', 'asc')->get();
 
@@ -27,6 +30,9 @@ class ExerciseController extends Controller
 	    ]);
     }
 
+	/**
+	* desc: Adds an exercise for today's date
+	*/
     public function postExercise(Request $request) {
 		$this->validate($request, [
 	    	'name' => 'required|max:255',
@@ -41,11 +47,17 @@ class ExerciseController extends Controller
 		return redirect('/');
     }
 
+	/**
+	* desc: Deletes an exercise by id
+	*/
     public function deleteExercise($id) {
 		Exercise::findOrFail($id)->delete();
 		return redirect('/');
     }
 
+	/**
+	* desc: Gets all used dates
+	*/
     public function getDates() {
 		$datesRaw = Exercise::groupBy('date')->get();
 
@@ -59,7 +71,10 @@ class ExerciseController extends Controller
 		]);
     }
 
-    public function getDate($date) {
+	/**
+	* desc: Gets exercises by date
+	*/
+    public function getExercisesByDate($date) {
     	$exercises = Exercise::orderBy('created_at')
 								->where('date', '=', $date)
 								->get();
@@ -70,6 +85,9 @@ class ExerciseController extends Controller
 		]);
     }
 
+	/**
+	* desc: Gets all exercises
+	*/
     public function getExercises() {
     	$exercises = Exercise::groupBy('name')->get();
 
@@ -78,6 +96,9 @@ class ExerciseController extends Controller
 		]);
     }
 
+	/**
+	* desc: Gets exercise by name
+	*/
     public function getExerciseByName($name) {
     	$exercises = Exercise::where('name', '=', $name)->get();
 		
@@ -87,6 +108,9 @@ class ExerciseController extends Controller
 		]);
     }
 
+	/**
+	* desc: Gets exercises by id
+	*/
     public function getExerciseById($id) {
     	$exercise = Exercise::where('id', '=', $id)->get();
 
@@ -95,6 +119,9 @@ class ExerciseController extends Controller
 		]);
     }
 
+	/**
+	* desc: Updates an exercise record
+	*/
     public function putExercise(Request $request) {
     	$this->validate($request, [
 	    	'name' => 'required|max:255',
