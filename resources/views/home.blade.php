@@ -30,7 +30,7 @@
             <!-- Add Exercise Button -->
             <div class="form-group">
                 <div class="col-sm-offset-3 col-sm-6">
-                    <button type="submit" class="btn btn-default">
+                    <button type="submit" class="btn btn-primary">
                         <i class="fa fa-plus"></i> Add exercise
                     </button>
                 </div>
@@ -51,7 +51,7 @@
                     <tbody>
                         @foreach ($result as $date => $exercises)
                             <tr>
-                                <td style="background: gray" class="table-text">
+                                <td style="background: #d3d3d3" class="table-text">
                                     <a href="{{ URL::to('/dateFilter') }}/{{ $date }}">
                                         <b>{{ $date }}</b>
                                     </a>
@@ -72,7 +72,9 @@
 
                                     <td>
                                         <form action="editExercise/{{ $exercise->id }}" method="GET">
-                                            <button>Edit</button>
+                                            <button class="btn btn-default">
+                                                <span class="glyphicon glyphicon-pencil"></span>
+                                            </button>
                                         </form>
                                     </td>
 
@@ -82,7 +84,9 @@
                                             {{ csrf_field() }}
                                             {{ method_field('DELETE') }}
 
-                                            <button>Delete</button>
+                                            <button class="btn btn-danger">
+                                                <span class="glyphicon glyphicon-trash"></span>
+                                            </button>
                                         </form>
                                     </td>
                                 </tr>

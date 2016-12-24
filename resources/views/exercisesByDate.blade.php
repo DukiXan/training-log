@@ -30,7 +30,9 @@
 
                                 <td>
                                     <form action="{{ URL::to('/editExercise') }}/{{ $exercise->id }}" method="GET">
-                                        <button>Edit</button>
+                                        <button class="btn btn-default">
+                                            <span class="glyphicon glyphicon-pencil"></span>
+                                        </button>
                                     </form>
                                 </td>
                                 <!-- Delete Button -->
@@ -39,7 +41,9 @@
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
 
-                                        <button>Delete Exercise</button>
+                                        <button class="btn btn-danger">
+                                            <span class="glyphicon glyphicon-trash"></span>
+                                        </button>
                                     </form>
                                 </td>
                             </tr>
